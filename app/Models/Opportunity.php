@@ -74,7 +74,7 @@ class Opportunity extends Model
                 // Get the figure.
                 $figure = strip_whitespace($node->text());
 
-                // Determinte the correct key.
+                // Determine the correct key.
                 $keys = ['terms_in_months', 'projected_rent', 'projected_return'];
                 $key = $keys[$i];
 
@@ -86,7 +86,7 @@ class Opportunity extends Model
                 // Get the figure.
                 $figure = strip_whitespace($node->text());
 
-                // Determinte the correct key.
+                // Determine the correct key.
                 $keys = ['deal_size', 'investors', 'funded_percent', 'invested'];
                 $key = $keys[$i];
 
