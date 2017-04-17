@@ -1,0 +1,52 @@
+#!/usr/bin/env php
+<?php
+
+// Autoload dependencies.
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Get the CLI arguments.
+$arguments = $_SERVER['argv'] ?? [];
+
+// Clear the executed file from the arguments.
+array_shift($arguments);
+
+// Do we have a controller to fire?
+if (isset($arguments[0]))
+{
+    // Get the controller class.
+    $controller = ucfirst($arguments[0]);
+    $controller = 'App\\Controllers\\' . $controller;
+
+    // Throw an error if the controller doesn't exist.
+    if (!class_exists($controller))
+    {
+        App\Libraries\Output::cli()
+            ->backgroundRed()
+            ->white()
+            ->out(sprintf('Controller %s does not exist.', $controller));
+    }
+    // Otherwise instantiate it.
+    else
+    {
+        // Initialize the controller.
+        $controller = new $controller;
+
+        // Do we have an action?
+        $action = $arguments[1] ?? 'index';
+
+        // Output response.
+        $controller->$action();
+    }
+}
+// Otherwise display the available commands.
+else
+{
+    App\Libraries\Output::cli()
+        ->out('Available tasks:')
+        ->table([
+            [
+                'Command' => 'opportunities',
+                'Description' => 'Lists the current opportunities in JSON format.'
+            ]
+        ]);
+}
